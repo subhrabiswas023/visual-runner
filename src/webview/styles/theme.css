@@ -1,0 +1,37 @@
+:root {
+    /* Standard VS Code colors */
+    --foreground: var(--vscode-foreground);
+    --background: var(--vscode-editor-background);
+    --selection-background: var(--vscode-editor-selectionBackground);
+    
+    /* Editor colors */
+    --editor-foreground: var(--vscode-editor-foreground);
+    --editor-background: var(--vscode-editor-background);
+    --editor-widget-background: var(--vscode-editorWidget-background);
+    --editor-widget-border: var(--vscode-editorWidget-border);
+    
+    /* Input colors */
+    --input-background: var(--vscode-input-background);
+    --input-foreground: var(--vscode-input-foreground);
+    --input-border: var(--vscode-input-border);
+    --input-placeholder-foreground: var(--vscode-input-placeholderForeground);
+    
+    /* Button colors */
+    --button-background: var(--vscode-button-background);
+    --button-foreground: var(--vscode-button-foreground);
+    --button-hover-background: var(--vscode-button-hoverBackground);
+    
+    /* Badge colors */
+    --badge-background: var(--vscode-badge-background);
+    --badge-foreground: var(--vscode-badge-foreground);
+    
+    /* Console colors */
+    --console-error-foreground: var(--vscode-errorForeground);
+    --console-warning-foreground: var(--vscode-editorWarning-foreground);
+    --console-info-foreground: var(--vscode-editorInfo-foreground);
+    
+    /* Custom component colors */
+    --monaco-border: var(--vscode-panel-border);
+    --monaco-title-bar: var(--vscode-titleBar-activeBackground);
+    --monaco-toolbar: var(--vscode-toolbar-activeBackground);
+}

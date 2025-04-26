@@ -1,0 +1,264 @@
+@import './theme.css';
+
+body {
+    padding: 0;
+    margin: 0;
+    color: var(--foreground);
+    background-color: var(--background);
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size);
+    font-weight: var(--vscode-font-weight);
+}
+
+/* Monaco Editor Styles */
+.monaco-editor-group {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--monaco-border);
+    border-radius: 2px;
+}
+
+.monaco-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--monaco-title-bar);
+    padding: 0 8px;
+    height: 35px;
+    border-bottom: 1px solid var(--monaco-border);
+}
+
+.monaco-editor-title {
+    display: flex;
+    align-items: center;
+}
+
+.monaco-icon-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.monaco-actions-bar {
+    display: flex;
+    align-items: center;
+}
+
+.actions-container {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 4px;
+}
+
+.action-item a {
+    display: flex;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--foreground);
+    opacity: 0.8;
+    border-radius: 3px;
+}
+
+.action-item a:hover {
+    opacity: 1;
+    background: var(--button-hover-background);
+}
+
+/* Console Styles */
+.debug-console-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--editor-background);
+}
+
+.debug-console-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    font-family: var(--vscode-editor-font-family);
+    font-size: var(--vscode-editor-font-size);
+}
+
+.console-message {
+    display: flex;
+    gap: 8px;
+    padding: 2px 0;
+    line-height: 1.4;
+}
+
+.console-message.error {
+    color: var(--console-error-foreground);
+}
+
+.console-message.system {
+    color: var(--console-info-foreground);
+    font-style: italic;
+}
+
+.console-message-timestamp {
+    opacity: 0.7;
+    font-size: 0.9em;
+    user-select: none;
+}
+
+/* Input Styles */
+.monaco-input-box {
+    display: flex;
+    align-items: center;
+    background: var(--input-background);
+    border: 1px solid var(--input-border);
+    padding: 4px 6px;
+    border-radius: 2px;
+}
+
+.monaco-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--input-foreground);
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+}
+
+.monaco-input::placeholder {
+    color: var(--input-placeholder-foreground);
+}
+
+.monaco-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--vscode-scrollbarSlider-background);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--vscode-scrollbarSlider-hoverBackground);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: var(--vscode-scrollbarSlider-activeBackground);
+}
+
+/* Focus and High Contrast Styles */
+:root {
+    --focus-border: var(--vscode-focusBorder);
+    --contrast-border: var(--vscode-contrastBorder);
+    --contrast-active-border: var(--vscode-contrastActiveBorder);
+}
+
+/* Focus styles for interactive elements */
+.action-item a:focus-visible,
+.monaco-input:focus-visible {
+    outline: 1px solid var(--focus-border);
+    outline-offset: -1px;
+}
+
+/* Add smooth transitions */
+.action-item a,
+.monaco-input-box,
+.monaco-editor-group {
+    transition: all 0.1s ease-in-out;
+}
+
+/* High contrast theme support */
+@media screen and (forced-colors: active) {
+    .monaco-editor-group {
+        border-color: var(--contrast-border);
+    }
+
+    .monaco-editor-header {
+        border-color: var(--contrast-border);
+    }
+
+    .action-item a:hover {
+        border: 1px solid var(--contrast-active-border);
+    }
+
+    .monaco-input-box {
+        border-color: var(--contrast-border);
+    }
+
+    .monaco-input-box:focus-within {
+        border-color: var(--contrast-active-border);
+    }
+
+    .console-message.error {
+        border-left: 3px solid var(--console-error-foreground);
+        padding-left: 5px;
+    }
+
+    .console-message.system {
+        border-left: 3px solid var(--console-info-foreground);
+        padding-left: 5px;
+    }
+}
+
+/* Improve scrollbar visibility in high contrast */
+@media screen and (forced-colors: active) {
+    ::-webkit-scrollbar-thumb {
+        border: 1px solid var(--contrast-border);
+    }
+
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:active {
+        border-color: var(--contrast-active-border);
+    }
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--vscode-editor-background);
+    opacity: 0.3;
+}
+
+.action-label.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 0.3; }
+    100% { opacity: 0.6; }
+}
+
+/* Improve disabled state visibility */
+[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Add focus ring animation */
+@keyframes focusRing {
+    from { outline-offset: -2px; }
+    to { outline-offset: 2px; }
+}
+
+*:focus-visible {
+    animation: focusRing 0.2s ease-in-out;
+}

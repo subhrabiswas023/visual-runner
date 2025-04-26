@@ -1,26 +1,113 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { commands } from './commands';
+import { InputsProvider } from './webview/views/inputsProvider';
+import { ConsoleProvider } from './webview/views/consoleProvider';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    // Create providers
+    const inputsProvider = new InputsProvider();
+    const consoleProvider = new ConsoleProvider();
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "visual-runner" is now active!');
+    // Register views
+    const inputsView = vscode.window.createTreeView('visual-runner-inputs', {
+        treeDataProvider: inputsProvider,
+        showCollapseAll: true
+    });
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('visual-runner.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Visual Runner!');
-	});
+    const consoleView = vscode.window.createTreeView('visual-runner-console', {
+        treeDataProvider: consoleProvider,
+        showCollapseAll: true
+    });
 
-	context.subscriptions.push(disposable);
+    // Register providers as global variables for command access 
+    context.globalState.update('inputsProvider', inputsProvider);
+    context.globalState.update('consoleProvider', consoleProvider);
+
+    // Register commands
+    context.subscriptions.push(
+        vscode.commands.registerCommand('visual-runner.addInput', () => {
+            const inputCount = inputsProvider['inputs'].length;
+            inputsProvider.addInput(`Input ${inputCount + 1}`);
+        }),
+        vscode.commands.registerCommand('visual-runner.editInput', async (item) => {
+            const newContent = await vscode.window.showInputBox({
+                prompt: 'Edit input content',
+                value: item.content
+            });
+            if (newContent !== undefined) {
+                const index = inputsProvider['inputs'].findIndex(i => i === item);
+                if (index !== -1) {
+                    inputsProvider.updateInput(index, item.label, newContent, item.color);
+                }
+            }
+        }),
+        vscode.commands.registerCommand('visual-runner.deleteInput', (item) => {
+            const index = inputsProvider['inputs'].findIndex(i => i === item);
+            if (index !== -1) {
+                inputsProvider.removeInput(index);
+            }
+        }),
+        vscode.commands.registerCommand('visual-runner.clearConsole', () => {
+            consoleProvider.clear();
+        })
+    );
+
+    // Register all commands from the registry
+    Object.entries(commands).forEach(([id, handler]) => {
+        const disposable = vscode.commands.registerCommand(id, handler);
+        context.subscriptions.push(disposable);
+    });
+
+    // Add views to subscriptions for cleanup
+    context.subscriptions.push(inputsView, consoleView);
+
+    // Watch for active editor changes
+    context.subscriptions.push(
+        vscode.window.onDidChangeActiveTextEditor(() => {
+            // Update view titles or state as needed
+        })
+    );
+
+    // Set up file system watchers
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (workspaceFolder) {
+        const inputWatcher = vscode.workspace.createFileSystemWatcher(
+            new vscode.RelativePattern(workspaceFolder, '.vscode/.runner/inputs/*.json')
+        );
+
+        const cacheWatcher = vscode.workspace.createFileSystemWatcher(
+            new vscode.RelativePattern(workspaceFolder, '.vscode/.runner/.cache/*.{cache,output}')
+        );
+
+        inputWatcher.onDidDelete(uri => {
+            // Notify input views to refresh if their storage was deleted
+            const inputsProvider = context.globalState.get('inputsProvider') as InputsProvider;
+            if (inputsProvider) {
+                inputsProvider['inputs'] = [];
+                inputsProvider['_onDidChangeTreeData'].fire();
+            }
+        });
+
+        context.subscriptions.push(inputWatcher, cacheWatcher);
+    }
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+    // Clean up resources
+    const context = vscode.extensions.getExtension('visual-runner')?.exports?.context;
+    if (context) {
+        try {
+            // Clean up temporary files in .cache directory
+            const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+            if (workspaceFolder) {
+                const cacheUri = vscode.Uri.joinPath(workspaceFolder.uri, '.vscode/.runner/.cache');
+                vscode.workspace.fs.delete(cacheUri, { recursive: true }).catch(() => {
+                    // Ignore errors during cleanup
+                });
+            }
+        } catch (error) {
+            // Log but don't throw during deactivation
+            console.warn('Error during extension cleanup:', error);
+        }
+    }
+}
