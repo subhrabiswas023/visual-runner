@@ -3,63 +3,35 @@ import { commands } from './commands';
 import { InputsProvider } from './webview/views/inputsProvider';
 import { ConsoleProvider } from './webview/views/consoleProvider';
 
+const extensionId = 'visual-runner';
+
 export function activate(context: vscode.ExtensionContext) {
     // Create providers
     const inputsProvider = new InputsProvider();
     const consoleProvider = new ConsoleProvider();
 
-    // Register views
-    const inputsView = vscode.window.createTreeView('visual-runner-inputs', {
-        treeDataProvider: inputsProvider,
-        showCollapseAll: true
-    });
-
-    const consoleView = vscode.window.createTreeView('visual-runner-console', {
-        treeDataProvider: consoleProvider,
-        showCollapseAll: true
-    });
-
     // Register providers as global variables for command access 
     context.globalState.update('inputsProvider', inputsProvider);
     context.globalState.update('consoleProvider', consoleProvider);
 
-    // Register commands
-    context.subscriptions.push(
-        vscode.commands.registerCommand('visual-runner.addInput', () => {
-            const inputCount = inputsProvider['inputs'].length;
-            inputsProvider.addInput(`Input ${inputCount + 1}`);
-        }),
-        vscode.commands.registerCommand('visual-runner.editInput', async (item) => {
-            const newContent = await vscode.window.showInputBox({
-                prompt: 'Edit input content',
-                value: item.content
-            });
-            if (newContent !== undefined) {
-                const index = inputsProvider['inputs'].findIndex(i => i === item);
-                if (index !== -1) {
-                    inputsProvider.updateInput(index, item.label, newContent, item.color);
-                }
-            }
-        }),
-        vscode.commands.registerCommand('visual-runner.deleteInput', (item) => {
-            const index = inputsProvider['inputs'].findIndex(i => i === item);
-            if (index !== -1) {
-                inputsProvider.removeInput(index);
-            }
-        }),
-        vscode.commands.registerCommand('visual-runner.clearConsole', () => {
-            consoleProvider.clear();
-        })
-    );
+    // Register views
+    const inputsView = vscode.window.createTreeView(`${extensionId}-inputs`, {
+        treeDataProvider: inputsProvider,
+        showCollapseAll: true
+    });
+    const consoleView = vscode.window.createTreeView(`${extensionId}-console`, {
+        treeDataProvider: consoleProvider,
+        showCollapseAll: true
+    });
+
+    // Add views to subscriptions for cleanup
+    context.subscriptions.push(inputsView, consoleView);
 
     // Register all commands from the registry
     Object.entries(commands).forEach(([id, handler]) => {
         const disposable = vscode.commands.registerCommand(id, handler);
         context.subscriptions.push(disposable);
     });
-
-    // Add views to subscriptions for cleanup
-    context.subscriptions.push(inputsView, consoleView);
 
     // Watch for active editor changes
     context.subscriptions.push(

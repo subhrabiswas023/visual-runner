@@ -1,7 +1,7 @@
 import { signal } from '@preact/signals';
 import { useEffect } from 'preact/hooks';
 import { ConsoleView } from '../components/ConsoleView';
-import { InputView, InputViewState } from '../components/InputView';
+import { InputView, InputViewState } from './InputsView';
 import { VSCodeAPI } from '../utilities/vscode';
 
 // State management using signals
@@ -60,7 +60,7 @@ export function App() {
                         onClick={() => VSCodeAPI.get().postMessage({ 
                             command: 'addInput',
                             value: {
-                                id: Date.now().toString(),
+                                id: Date.now().toString(), // FIX: use a better ID generation method
                                 name: 'New Input',
                                 content: ''
                             }

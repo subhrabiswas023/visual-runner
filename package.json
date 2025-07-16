@@ -10,11 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onWebviewPanel:visualRunner",
-    "onCommand:visual-runner.runFile",
-    "onCommand:visual-runner.suspendExecution",
-    "onCommand:visual-runner.rerunFile",
-    "onCommand:visual-runner.stopExecution"
+    "onWebviewPanel:visualRunner"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -140,7 +136,8 @@
         {
           "command": "visual-runner.editInput",
           "when": "view == visual-runner-inputs",
-          "group": "inline"
+          "group": "inline",
+          "icon": "$(edit)"
         },
         {
           "command": "visual-runner.deleteInput",
@@ -164,13 +161,15 @@
           "id": "visual-runner-inputs",
           "name": "Inputs",
           "type": "tree",
-          "visibility": "collapsed"
+          "visibility": "collapsed",
+          "icon": "$(list-tree)"
         },
         {
           "id": "visual-runner-console",
           "name": "Console",
           "type": "tree",
-          "visibility": "collapsed"
+          "visibility": "collapsed",
+          "icon": "$(terminal)"
         }
       ]
     },

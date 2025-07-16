@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { ProcessManager } from '../execution/processManager';
-import { InputsProvider } from '../webview/views/inputsProvider';
-import { ConsoleProvider } from '../webview/views/consoleProvider';
+import { ProcessManager } from '../../execution/processManager';
+import { InputsProvider } from '../../webview/views/inputsProvider';
+import { ConsoleProvider } from '../../webview/views/consoleProvider';
 
 export async function runFile() {
     const editor = vscode.window.activeTextEditor;

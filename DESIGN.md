@@ -6,14 +6,30 @@
 src/
 ├── extension.ts              # Extension entry point
 ├── commands/                 # Command implementations
-│   ├── runFile.ts           # Run/Resume command
-│   ├── suspendExecution.ts  # Suspend command
-│   ├── rerunFile.ts         # Rerun command
-│   └── stopExecution.ts     # Stop command
+│   ├── Inputs                # Input view commands
+│   │   ├── addInput.ts       # Add input command
+│   │   ├── deleteInput.ts    # Remove input command
+│   │   ...
+│   ├── Console               # Console commands
+│   |   ├── clearConsole.ts       # Clear console command
+│   |   ...
+│   ├── Execution             # Execution commands
+│   |   ├── rerunFile.ts         # Rerun command
+│   |   ├── stopExecution.ts     # Stop command
+│   |   ...
+|   ├── context.ts            # Imports and manages context
+|   └── index.ts              # Exports all commands
 ├── webview/                  # WebView implementation
-│   ├── panel.ts             # WebView panel manager
-│   ├── inputView.ts         # Input view implementation
-│   └── consoleView.ts       # Interactive console implementation
+|   ├── components                # UI components
+|   │   ├── App.tsx               # WebView panel manager
+|   │   ├── InputView.tsx         # Input view component
+|   │   ├── ConsoleView.tsx       # Console view component
+|   ├── styles                # CSS styles
+|   │   ├── index.css             # WebView styles
+|   │   ├── theme.css             # Theme styles
+|   ├── views               # WebView views
+|   │   ├── inputView.tsx         # Input view UI
+|   │   ├── consoleView.tsx       # Console view UI
 ├── execution/               # Execution handling
 │   ├── executor.ts         # Language-agnostic executor
 │   ├── processManager.ts   # Process lifecycle management
@@ -45,26 +61,26 @@ src/
 
 ### 2. WebView Implementation
 
-#### Panel Manager (panel.ts)
+#### Panel Manager (App.tsx)
 
-- Handles WebView lifecycle
-- Manages state between VS Code and WebView
+- Built with Preact for lightweight, efficient UI
+- Uses Preact Signals for state management
 - Implements message passing protocol
 - Retains context across editor sessions
 
-#### Input View (inputView.ts)
+#### Input View (InputsView.tsx)
 
-- Multi-line editor component
-- Input view management (add, rename, color-code)
-- Input persistence and restoration
+- Preact functional component with hooks
+- Input view management using Signals
+- Input persistence and state restoration
 - Export/import functionality
 
-#### Console View (consoleView.ts)
+#### Console View (ConsoleView.tsx)
 
-- Clean console interface
-- Syntax highlighting integration
-- Interactive input handling
-- Process state visualization
+- Preact-based console interface
+- Integrated syntax highlighting
+- Interactive input handling with Signals
+- Process state visualization using Preact components
 
 ### 3. Execution System
 
@@ -146,17 +162,17 @@ src/
 
 ### VS Code → WebView
 
-- File changes
-- Execution state updates
-- Process output
-- Theme updates
+- File changes through Preact state updates
+- Execution state managed by Signals
+- Process output through component props
+- Theme updates via CSS variables
 
 ### WebView → VS Code
 
-- Input submission
-- Command triggers
-- View configuration changes
-- State synchronization
+- Input submission via Preact event handlers
+- Command triggers through VSCode API
+- View configuration through Signals
+- State synchronization with Extension Context
 
 ## 🛡️ Error Handling
 
@@ -183,23 +199,23 @@ src/
 
 ## 🎨 UI/UX Guidelines
 
+### Component Architecture
+
+- Functional Preact components
+- Signal-based state management
+- CSS-in-JS with VS Code theming
+- Accessibility-first approach
+
 ### Input View
 
-- Clear input state indicators
-- Intuitive view management
-- Consistent color scheme
-- Keyboard shortcuts
+- Preact-powered input management
+- Reactive state updates
+- VS Code-native styling
+- Keyboard event handling
 
 ### Console
 
-- Clear output formatting
-- Distinct user input styling
-- Process state visibility
-- Error highlighting
-
-### Controls
-
-- Responsive button states
-- Clear action feedback
-- Keyboard accessibility
-- Status indicators
+- Virtualized output rendering
+- Signal-driven updates
+- VS Code theme integration
+- Error boundary protection
