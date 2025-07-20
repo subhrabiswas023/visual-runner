@@ -16,133 +16,67 @@
   "contributes": {
     "commands": [
       {
-        "command": "visual-runner.runFile",
-        "title": "Visual Runner: Run File",
-        "shortTitle": "Run",
-        "icon": "$(play)",
-        "category": "Visual Runner"
-      },
-      {
-        "command": "visual-runner.suspendExecution",
-        "title": "Visual Runner: Suspend Execution",
-        "shortTitle": "Suspend",
-        "icon": "$(debug-pause)",
-        "category": "Visual Runner"
-      },
-      {
-        "command": "visual-runner.rerunFile",
-        "title": "Visual Runner: Rerun File",
-        "shortTitle": "Rerun",
+        "command": "visual-runner.inputs.refresh",
+        "title": "Refresh Inputs",
         "icon": "$(refresh)",
         "category": "Visual Runner"
       },
       {
-        "command": "visual-runner.stopExecution",
-        "title": "Visual Runner: Stop Execution",
-        "shortTitle": "Stop",
-        "icon": "$(debug-stop)",
-        "category": "Visual Runner"
-      },
-      {
-        "command": "visual-runner.addInput",
+        "command": "visual-runner.inputs.addInput",
         "title": "Add Input",
         "icon": "$(add)",
         "category": "Visual Runner"
       },
       {
-        "command": "visual-runner.clearConsole",
-        "title": "Clear Console",
-        "icon": "$(clear-all)",
+        "command": "visual-runner.inputs.deleteInput",
+        "title": "Delete Input",
+        "icon": "$(trash)",
+        "category": "Visual Runner"
+      },
+      {
+        "command": "visual-runner.inputs.renameInput",
+        "title": "Rename Input",
+        "icon": "$(edit)",
         "category": "Visual Runner"
       }
     ],
-    "keybindings": [
-      {
-        "command": "visual-runner.runFile",
-        "key": "ctrl+alt+r",
-        "mac": "cmd+alt+r",
-        "when": "editorFocus"
-      },
-      {
-        "command": "visual-runner.suspendExecution",
-        "key": "ctrl+alt+s",
-        "mac": "cmd+alt+s",
-        "when": "visualRunner.isRunning"
-      },
-      {
-        "command": "visual-runner.rerunFile",
-        "key": "ctrl+alt+shift+r",
-        "mac": "cmd+alt+shift+r",
-        "when": "editorFocus"
-      },
-      {
-        "command": "visual-runner.stopExecution",
-        "key": "ctrl+alt+x",
-        "mac": "cmd+alt+x",
-        "when": "visualRunner.isRunning"
-      }
-    ],
     "menus": {
-      "editor/title": [
-        {
-          "command": "visual-runner.runFile",
-          "group": "navigation",
-          "when": "resourceLangId =~ /^(python|javascript|typescript|java)$/"
-        }
-      ],
-      "editor/title/run": [
-        {
-          "command": "visual-runner.runFile",
-          "when": "resourceLangId =~ /^(python|javascript|typescript|java)$/",
-          "group": "navigation@1"
-        },
-        {
-          "command": "visual-runner.rerunFile",
-          "when": "resourceLangId =~ /^(python|javascript|typescript|java)$/",
-          "group": "navigation@2"
-        }
-      ],
-      "commandPalette": [
-        {
-          "command": "visual-runner.runFile",
-          "when": "resourceLangId =~ /^(python|javascript|typescript|java)$/"
-        },
-        {
-          "command": "visual-runner.suspendExecution",
-          "when": "visualRunner.isRunning"
-        },
-        {
-          "command": "visual-runner.rerunFile",
-          "when": "resourceLangId =~ /^(python|javascript|typescript|java)$/"
-        },
-        {
-          "command": "visual-runner.stopExecution",
-          "when": "visualRunner.isRunning"
-        }
-      ],
       "view/title": [
         {
-          "command": "visual-runner.addInput",
-          "when": "view == visual-runner-inputs",
+          "command": "visual-runner.inputs.addInput",
+          "when": "view == visual-runner.inputs",
           "group": "navigation"
         },
         {
-          "command": "visual-runner.clearConsole",
-          "when": "view == visual-runner-console",
+          "command": "visual-runner.inputs.refresh",
+          "when": "view == visual-runner.inputs",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "visual-runner.editInput",
-          "when": "view == visual-runner-inputs",
-          "group": "inline",
+          "command": "visual-runner.inputs.renameInput",
+          "when": "view == visual-runner.inputs && viewItem == input",
+          "group": "inline@1",
           "icon": "$(edit)"
         },
         {
-          "command": "visual-runner.deleteInput",
-          "when": "view == visual-runner-inputs",
-          "group": "inline"
+          "command": "visual-runner.inputs.deleteInput",
+          "when": "view == visual-runner.inputs && viewItem == input",
+          "group": "inline@2",
+          "icon": "$(trash)"
+        },
+        {
+          "command": "visual-runner.inputs.renameInput",
+          "when": "view == visual-runner.inputs && viewItem == input",
+          "group": "modification@1",
+          "icon": "$(edit)"
+        },
+        {
+          "command": "visual-runner.inputs.deleteInput",
+          "when": "view == visual-runner.inputs && viewItem == input",
+          "group": "modification@2",
+          "icon": "$(trash)"
         }
       ]
     },
@@ -158,18 +92,11 @@
     "views": {
       "visual-runner": [
         {
-          "id": "visual-runner-inputs",
+          "id": "visual-runner.inputs",
           "name": "Inputs",
           "type": "tree",
           "visibility": "collapsed",
           "icon": "$(list-tree)"
-        },
-        {
-          "id": "visual-runner-console",
-          "name": "Console",
-          "type": "tree",
-          "visibility": "collapsed",
-          "icon": "$(terminal)"
         }
       ]
     },
