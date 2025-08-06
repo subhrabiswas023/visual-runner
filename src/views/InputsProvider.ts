@@ -75,4 +75,16 @@ export class InputsProvider
             this.refresh();
         }
     }
+
+    deleteLine(element: InputLineItem) {
+        const input = this.inputs.get(element.parentId);
+        if (input && input.content.length > 1) {
+            input.content.splice(element.index, 1);
+            this.refresh();
+        } else if (input) {
+            vscode.window.showErrorMessage(
+                "Cannot delete the last line of an input."
+            );
+        }
+    }
 }

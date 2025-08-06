@@ -3,7 +3,7 @@ import { AbstractTreeNode } from './types';
 import { InputLineItem } from './InputLineItem';
 
 export class InputItem extends AbstractTreeNode{
-    private content: string[] = [''];
+    content: string[] = [''];
 
     constructor(
         readonly id: string,
