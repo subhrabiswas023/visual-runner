@@ -18,26 +18,26 @@
       {
         "command": "visual-runner.inputs.refresh",
         "title": "Refresh Inputs",
-        "icon": "$(refresh)",
-        "category": "Visual Runner"
+        "category": "Visual Runner",
+        "icon": "$(refresh)"
       },
       {
         "command": "visual-runner.inputs.addInput",
         "title": "Add Input",
-        "icon": "$(add)",
-        "category": "Visual Runner"
+        "category": "Visual Runner",
+        "icon": "$(add)"
       },
       {
         "command": "visual-runner.inputs.deleteInput",
         "title": "Delete Input",
-        "icon": "$(trash)",
-        "category": "Visual Runner"
+        "category": "Visual Runner",
+        "icon": "$(trash)"
       },
       {
         "command": "visual-runner.inputs.renameInput",
         "title": "Rename Input",
-        "icon": "$(edit)",
-        "category": "Visual Runner"
+        "category": "Visual Runner",
+        "icon": "$(edit)"
       }
     ],
     "menus": {
