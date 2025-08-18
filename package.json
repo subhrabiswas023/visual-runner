@@ -22,16 +22,22 @@
         "icon": "$(refresh)"
       },
       {
-        "command": "visual-runner.inputs.addInput",
-        "title": "Add Input",
+        "command": "visual-runner.inputs.deleteItem",
+        "title": "Delete Item",
+        "category": "Visual Runner",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "visual-runner.inputs.addFile",
+        "title": "Add File",
         "category": "Visual Runner",
         "icon": "$(add)"
       },
       {
-        "command": "visual-runner.inputs.deleteInput",
-        "title": "Delete Input",
+        "command": "visual-runner.inputs.addInput",
+        "title": "Add Input",
         "category": "Visual Runner",
-        "icon": "$(trash)"
+        "icon": "$(add)"
       },
       {
         "command": "visual-runner.inputs.renameInput",
@@ -43,7 +49,7 @@
     "menus": {
       "view/title": [
         {
-          "command": "visual-runner.inputs.addInput",
+          "command": "visual-runner.inputs.addFile",
           "when": "view == visual-runner.inputs",
           "group": "navigation"
         },
@@ -55,28 +61,34 @@
       ],
       "view/item/context": [
         {
+          "command": "visual-runner.inputs.addInput",
+          "when": "view == visual-runner.inputs && viewItem == file",
+          "group": "inline@1"
+        },
+        {
+          "command": "visual-runner.inputs.addInput",
+          "when": "view == visual-runner.inputs && viewItem == file",
+          "group": "modification@1"
+        },
+        {
           "command": "visual-runner.inputs.renameInput",
           "when": "view == visual-runner.inputs && viewItem == input",
-          "group": "inline@1",
-          "icon": "$(edit)"
+          "group": "inline@1"
         },
         {
-          "command": "visual-runner.inputs.deleteInput",
-          "when": "view == visual-runner.inputs && viewItem == input",
-          "group": "inline@2",
-          "icon": "$(trash)"
+          "command": "visual-runner.inputs.deleteItem",
+          "when": "view == visual-runner.inputs && (viewItem == file || viewItem == input)",
+          "group": "inline@2"
         },
         {
           "command": "visual-runner.inputs.renameInput",
           "when": "view == visual-runner.inputs && viewItem == input",
-          "group": "modification@1",
-          "icon": "$(edit)"
+          "group": "modification@1"
         },
         {
-          "command": "visual-runner.inputs.deleteInput",
-          "when": "view == visual-runner.inputs && viewItem == input",
-          "group": "modification@2",
-          "icon": "$(trash)"
+          "command": "visual-runner.inputs.deleteItem",
+          "when": "view == visual-runner.inputs && (viewItem == file || viewItem == input)",
+          "group": "modification@2"
         }
       ]
     },
