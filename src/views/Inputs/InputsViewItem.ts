@@ -12,12 +12,14 @@ export class InputsViewItem extends TreeItem {
         super('Inputs View', vscode.TreeItemCollapsibleState.Collapsed, getId(), refreshCallback);
     }
 
-    refresh(element?: TreeRefreshEvent): void {
+    refresh(_element?: TreeRefreshEvent): void {
         this.refreshCallback();
     }
 
     async addFile() {
         // Get files from the workspace
+        // TODO: Get executable files from include glob pattern
+        // FIXME: the file icon is generic and need to show the theme icon
         const files = await vscode.workspace.findFiles('**/*', '{**/.git/**,**/node_modules/**,**/.vscode/**}');
         // Prepare quickpick items
         const quickPickItems: (vscode.QuickPickItem & { resourceUri: vscode.Uri })[] = files.map(file => {

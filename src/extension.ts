@@ -5,25 +5,30 @@ import { InputsProvider } from './views/Inputs/InputsProvider';
 import { InputItem } from './views/Inputs/InputItem';
 import { FileItem } from './views/Inputs/FileItem';
 import { TreeItem } from './views/TreeItem';
+import { ConsoleProvider } from './views/console/ConsoleProvider';
 
 
 export function activate(context: vscode.ExtensionContext) {
     const inputsProvider = new InputsProvider();
 
-    const inputsView = vscode.window.registerTreeDataProvider(`${EXTENSION_ID}.${inputsProvider.contextValue}`, inputsProvider);
+    const inputsView = vscode.window.registerTreeDataProvider(`${EXTENSION_ID}-${inputsProvider.contextValue}`, inputsProvider);
     context.subscriptions.push(inputsView);
 
-    const handlers = {
-        'refresh':() => inputsProvider.refresh(),
-        'deleteItem': (e: TreeItem) => e.getParent()?.removeChild(e),
-        'addFile': () => inputsProvider.inputsViewItem.addFile(),
-        'addInput': (e: FileItem) => e.addInput(),
-        'renameInput': (e: InputItem) => e.rename(),
-    };
+    const consoleProvider = new ConsoleProvider(context.extensionUri);
+    const consoleView = vscode.window.registerWebviewViewProvider(ConsoleProvider.viewType, consoleProvider);
+    context.subscriptions.push(consoleView);
 
+    const handlers = {
+        'inputs.deleteItem': (e: TreeItem) => e.getParent()?.removeChild(e),
+        'inputs.refresh':() => inputsProvider.refresh(),
+        'inputs.addFile': () => inputsProvider.inputsViewItem.addFile(),
+        'inputs.addInput': (e: FileItem) => e.addInput(),
+        'inputs.renameInput': (e: InputItem) => e.rename(),
+        'inputs.addLine': (e: InputItem) => e.addLine(),
+    };
     for (const [id, handler] of Object.entries(handlers)) {
         context.subscriptions.push(
-            vscode.commands.registerCommand(`${EXTENSION_ID}.${inputsProvider.contextValue}.${id}`, handler)
+            vscode.commands.registerCommand(`${EXTENSION_ID}-${id}`, handler)
         );
     }
 }

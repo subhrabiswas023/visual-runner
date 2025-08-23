@@ -16,78 +16,89 @@
   "contributes": {
     "commands": [
       {
-        "command": "visual-runner.inputs.refresh",
+        "command": "visual-runner-inputs.refresh",
         "title": "Refresh Inputs",
         "category": "Visual Runner",
         "icon": "$(refresh)"
       },
       {
-        "command": "visual-runner.inputs.deleteItem",
+        "command": "visual-runner-inputs.deleteItem",
         "title": "Delete Item",
         "category": "Visual Runner",
         "icon": "$(trash)"
       },
       {
-        "command": "visual-runner.inputs.addFile",
+        "command": "visual-runner-inputs.addFile",
         "title": "Add File",
         "category": "Visual Runner",
         "icon": "$(add)"
       },
       {
-        "command": "visual-runner.inputs.addInput",
+        "command": "visual-runner-inputs.addInput",
         "title": "Add Input",
         "category": "Visual Runner",
         "icon": "$(add)"
       },
       {
-        "command": "visual-runner.inputs.renameInput",
+        "command": "visual-runner-inputs.renameInput",
         "title": "Rename Input",
         "category": "Visual Runner",
         "icon": "$(edit)"
+      },
+      {
+        "command": "visual-runner-inputs.addLine",
+        "title": "Add Line",
+        "category": "Visual Runner",
+        "icon": "$(add)"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "visual-runner.inputs.addFile",
-          "when": "view == visual-runner.inputs",
+          "command": "visual-runner-inputs.addFile",
+          "when": "view == visual-runner-inputs",
           "group": "navigation"
         },
         {
-          "command": "visual-runner.inputs.refresh",
-          "when": "view == visual-runner.inputs",
+          "command": "visual-runner-inputs.refresh",
+          "when": "view == visual-runner-inputs",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "visual-runner.inputs.addInput",
-          "when": "view == visual-runner.inputs && viewItem == file",
+          "command": "visual-runner-inputs.addInput",
+          "when": "view == visual-runner-inputs && viewItem == file",
           "group": "inline@1"
         },
         {
-          "command": "visual-runner.inputs.addInput",
-          "when": "view == visual-runner.inputs && viewItem == file",
+          "command": "visual-runner-inputs.addInput",
+          "when": "view == visual-runner-inputs && viewItem == file",
           "group": "modification@1"
         },
         {
-          "command": "visual-runner.inputs.renameInput",
-          "when": "view == visual-runner.inputs && viewItem == input",
+          "command": "visual-runner-inputs.renameInput",
+          "when": "view == visual-runner-inputs && viewItem == input",
           "group": "inline@1"
         },
         {
-          "command": "visual-runner.inputs.deleteItem",
-          "when": "view == visual-runner.inputs && (viewItem == file || viewItem == input)",
+          "command": "visual-runner-inputs.addLine",
+          "when": "view == visual-runner-inputs && viewItem == input",
+          "group": "inline@1"
+        },
+        {
+          "command": "visual-runner-inputs.deleteItem",
+          "when": "view == visual-runner-inputs && (viewItem == file || viewItem == input)",
           "group": "inline@2"
         },
         {
-          "command": "visual-runner.inputs.renameInput",
-          "when": "view == visual-runner.inputs && viewItem == input",
+          "command": "visual-runner-inputs.renameInput",
+          "when": "view == visual-runner-inputs && viewItem == input",
           "group": "modification@1"
         },
         {
-          "command": "visual-runner.inputs.deleteItem",
-          "when": "view == visual-runner.inputs && (viewItem == file || viewItem == input)",
+          "command": "visual-runner-inputs.deleteItem",
+          "when": "view == visual-runner-inputs && (viewItem == file || viewItem == input)",
           "group": "modification@2"
         }
       ]
@@ -99,47 +110,38 @@
           "title": "Visual Runner",
           "icon": "$(play)"
         }
+      ],
+      "panel": [
+        {
+          "id": "visual-console",
+          "title": "Visual Console",
+          "icon": "$(terminal)"
+        }
       ]
     },
     "views": {
       "visual-runner": [
         {
-          "id": "visual-runner.inputs",
+          "id": "visual-runner-inputs",
           "name": "Inputs",
           "type": "tree",
           "visibility": "collapsed",
           "icon": "$(list-tree)"
+        }
+      ],
+      "visual-console": [
+        {
+          "id": "visual-console",
+          "name": "Visual Console",
+          "type": "webview",
+          "visibility": "visible",
+          "icon": "$(terminal)"
         }
       ]
     },
     "configuration": {
       "title": "Visual Runner",
       "properties": {
-        "visualRunner.theme.useEditorColors": {
-          "type": "boolean",
-          "default": true,
-          "description": "Use VS Code editor colors for the Visual Runner interface"
-        },
-        "visualRunner.console.fontFamily": {
-          "type": "string",
-          "default": "monospace",
-          "description": "Font family for the console output"
-        },
-        "visualRunner.console.fontSize": {
-          "type": "number",
-          "default": 14,
-          "description": "Font size for the console output"
-        },
-        "visualRunner.input.defaultColor": {
-          "type": "string",
-          "default": "#007ACC",
-          "description": "Default color for new input views"
-        },
-        "visualRunner.execution.timeout": {
-          "type": "number",
-          "default": 30000,
-          "description": "Process execution timeout in milliseconds"
-        },
         "visualRunner.execution.maxBuffer": {
           "type": "number",
           "default": 1048576,
@@ -168,11 +170,6 @@
           "type": "number",
           "default": 1000,
           "description": "Auto-save frequency in milliseconds"
-        },
-        "visualRunner.input.maxViews": {
-          "type": "number",
-          "default": 10,
-          "description": "Maximum number of input views"
         },
         "visualRunner.input.defaultMode": {
           "type": "string",

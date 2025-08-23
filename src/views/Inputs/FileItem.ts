@@ -9,11 +9,12 @@ export class FileItem extends TreeItem {
         resourceUri: vscode.Uri,
         public readonly refreshCallback: (element?: TreeRefreshEvent) => void
     ) {
-        super(resourceUri, vscode.TreeItemCollapsibleState.Collapsed, getId(), refreshCallback);
+        super(resourceUri, vscode.TreeItemCollapsibleState.Expanded, getId(), refreshCallback);
         this.contextValue = 'file';
         this.iconPath = vscode.ThemeIcon.File;
     }
 
+    // TODO: put this in {@link utils.js} file as an algorithm 
     private getDefaultLabel(): string {
         const inputItems = this._children;
         const indices = inputItems
