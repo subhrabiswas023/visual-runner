@@ -10,13 +10,13 @@
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": true,
-		"jsx": "react-jsx",
-		"jsxImportSource": "preact",
 		"moduleResolution": "Node16",
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+		"isolatedModules": true
 	},
 	"exclude": [
 		"node_modules",
-		"dist"
+		"dist",
+		"webviews"
 	]
 }

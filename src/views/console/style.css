@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    /* Use VS Code's background and foreground colors */
+    background-color: var(--vscode-editor-background);
+    color: var(--vscode-editor-foreground);
+    font-family: var(--vscode-editor-font-family);
+    font-size: var(--vscode-editor-font-size);
+    display: flex;
+    flex-direction: column;
+}
+
+#app {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--vscode-panel-background);
+    color: var(--vscode-foreground);
+}
+
+.console-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Output area container */
+#output-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    user-select: text;
+}
+
+/* Output lines */
+.output-line {
+    padding: 3px 20px;
+    transition: background-color 0.2s ease;
+}
+
+.output-line:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+
+/* Input container */
+#input-container {
+    display: flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-top: 1px solid var(--vscode-panel-border);
+    background-color: var(--vscode-panel-background);
+}
+
+/* Input field */
+#console-input {
+    flex: 1;
+    background: transparent;
+    color: var(--vscode-input-foreground);
+    border: none;
+    padding: 0 4px;
+    font-family: var(--vscode-editor-font-family);
+    font-size: var(--vscode-editor-font-size);
+    outline: none;
+}
+
+/* Prompt icon */
+.console-prompt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    color: var(--vscode-terminalCommandDecoration-defaultBackground);
+    font-size: 16px;
+    user-select: none;
+}
+
+.console-prompt:before {
+    content: ">";
+    font-weight: bold;
+    font-family: var(--vscode-editor-font-family);
+    white-space: nowrap;
+}

@@ -9,9 +9,6 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onWebviewPanel:visualRunner"
-  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -189,36 +186,48 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm run compile:webviews && npm run compile:extension",
+    "compile:webviews": "rollup -c",
+    "compile:extension": "webpack",
+    "watch": "concurrently \"npm run watch:webviews\" \"npm run watch:extension\"",
+    "watch:webviews": "rollup -c -w",
+    "watch:extension": "webpack --watch",
+    "package": "npm run compile && webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src",
+    "lint": "eslint src --ext ts",
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@tsconfig/svelte": "^5.0.5",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@types/vscode": "^1.99.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
+    "@vscode/codicons": "^0.0.39",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "concurrently": "^9.2.1",
     "css-loader": "^7.1.2",
     "eslint": "^9.23.0",
+    "rollup-plugin-css-only": "^4.5.4",
+    "rollup-plugin-svelte": "^7.2.3",
+    "rollup-plugin-terser": "^7.0.2",
     "style-loader": "^4.0.0",
+    "svelte": "^5.38.6",
+    "svelte-check": "^4.3.1",
+    "svelte-loader": "^3.2.4",
+    "svelte-preprocess": "^6.0.3",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.2",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
-  },
-  "dependencies": {
-    "@preact/signals": "^2.0.4",
-    "@vscode/codicons": "^0.0.36",
-    "preact": "^10.26.5"
   },
   "license": "MIT"
 }
