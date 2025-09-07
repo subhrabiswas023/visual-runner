@@ -1,13 +1,10 @@
-import App from "../components/Console.svelte";
+// Svelte 5 migration
+// you should use mount or hydrate (imported from svelte) instead.
+import { mount } from 'svelte';
+import App from '../components/console/Console.svelte';
 
-const target = document.getElementById('app');
-if (!target) {
-    console.error('Failed to find app target element');
-    throw new Error('Failed to find app target element');
-}
-
-const app = new App({
-    target
+const app = mount(App, {
+    target: document.getElementById('app')!
 });
 
 export default app;

@@ -1,9 +1,5 @@
-<script lang="ts" context="module">
-    const vscode = (window as any).vscode;
-</script>
-
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     
     interface OutputLine {
@@ -16,15 +12,16 @@
         text: string;
     }
 
+    const vscode = (window as any).vscode;
     let outputContainer: HTMLDivElement;
-    let inputValue = '';
     
-    // Make outputs reactive using a store
-    const outputs: Writable<OutputLine[]> = writable([]);
+    const outputs = writable<OutputLine[]>([]);
+    const inputValue = writable('');
     
     function appendOutput(text: string, className: string = '') {
         console.log('Appending output:', text);
         const lines = text.split('\n');
+        
         outputs.update(current => {
             console.log('Current outputs:', current);
             const newOutputs = [...current, ...lines.map(line => ({ text: line, class: className }))];
@@ -45,40 +42,41 @@
 
     function handleKeydown(event: KeyboardEvent) {
         if (event.key === 'Enter') {
-            const command = inputValue.trim();
+            let currentValue = '';
+            inputValue.subscribe(value => currentValue = value)();
+            
+            const command = currentValue.trim();
             if (command) {
                 appendOutput(command);
                 // Send command to extension
                 vscode.postMessage({ command: 'runCommand', text: command });
-                inputValue = '';
+                inputValue.set('');
             }
         }
     }
 
+    const messageHandler = (event: MessageEvent<VSCodeMessage>) => {
+        console.log('Received message:', event.data);
+        const message = event.data;
+        switch (message.command) {
+            case 'appendOutput':
+                appendOutput(message.text);
+                break;
+        }
+    };
+
     onMount(() => {
         console.log('Svelte component mounted');
         appendOutput('Svelte Console Initialized');
+        window.addEventListener('message', messageHandler);
+    });
 
-        // Listen for messages from the extension
-        window.addEventListener('message', (event: MessageEvent<VSCodeMessage>) => {
-            console.log('Received message:', event.data);
-            const message = event.data;
-            switch (message.command) {
-                case 'appendOutput':
-                    appendOutput(message.text);
-                    break;
-            }
-        });
-
-        // Clean up listener on unmount
-        return () => {
-            window.removeEventListener('message', () => {});
-        };
+    onDestroy(() => {
+        window.removeEventListener('message', messageHandler);
     });
 </script>
 
 <div class="console-container">
-    Hello from Svelte!
     <div id="output-container" bind:this={outputContainer}>
         {#each $outputs as line}
             <div class="output-line {line.class}">{line.text}</div>
@@ -90,7 +88,7 @@
         <input 
             id="console-input"
             type="text"
-            bind:value={inputValue}
+            bind:value={$inputValue}
             on:keydown={handleKeydown}
             spellcheck="false"
             autocomplete="off"
@@ -100,6 +98,17 @@
 </div>
 
 <style>
+    :global(html, body, #app) {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    :global(#app) {
+        font-family: var(--vscode-editor-font-family);
+        font-size: var(--vscode-editor-font-size);
+        color: var(--vscode-editor-foreground);
+    }
+
     /* Reuse existing styles */
     .console-container {
         height: 100%;
@@ -130,7 +139,7 @@
         padding: 2px 8px;
         border-top: 1px solid var(--vscode-panel-border);
         background-color: var(--vscode-panel-background);
-        min-height: 28px;
+        /* min-height: 28px; */
     }
 
     #console-input {
@@ -140,8 +149,8 @@
         border: none;
         padding: 0 4px;
         line-height: 19px;
-        font-family: var(--vscode-editor-font-family);
-        font-size: var(--vscode-editor-font-size);
+        font-family: inherit;
+        font-size: inherit;
         outline: none;
     }
 

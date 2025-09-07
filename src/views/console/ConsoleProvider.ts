@@ -59,7 +59,7 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Visual Console</title>
-                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src ${webview.cspSource} 'unsafe-eval' 'unsafe-inline'; img-src ${webview.cspSource} https:; connect-src ${webview.cspSource} https:;">
+                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}';">
                 <link href="${styleMainUri}" rel="stylesheet">
                 <script nonce="${nonce}">
                     window.vscode = acquireVsCodeApi();
@@ -67,7 +67,7 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
             </head>
             <body>
                 <div id="app"></div>
-                <script defer src="${scriptUri}" nonce="${nonce}"></script>
+                <script src="${scriptUri}" nonce="${nonce}"></script>
             </body>
             </html>`;
     }
