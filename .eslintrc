@@ -1,0 +1,6 @@
+{
+    "extends": [
+        "plugin:svelte/recommended",
+        "plugin:import/recommended"
+    ]
+}

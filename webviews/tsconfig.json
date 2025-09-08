@@ -1,6 +1,19 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
-  "include": ["./**/*", "../rollup.config.js", "../global.d.ts"],
-  "exclude": ["../node_modules/*"],
-  "compilerOptions": { "strict": true, "types": ["node", "svelte"] }
+    "extends": "@tsconfig/svelte/tsconfig.json",
+    "include": [
+        "./**/*",
+        "../rollup.config.js",
+        "../global.d.ts",
+        "../common/types.ts"
+    ],
+    "exclude": ["../node_modules/*"],
+    "compilerOptions": { 
+      "strict": true, 
+      "types": ["node", "svelte"],
+      "baseUrl": ".",
+      "paths": {
+        "@common/*": ["../common/*"],
+        "@stores/*": ["./stores/*"]
+      }
+    }
 }

@@ -61,9 +61,6 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
                 <title>Visual Console</title>
                 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}';">
                 <link href="${styleMainUri}" rel="stylesheet">
-                <script nonce="${nonce}">
-                    window.vscode = acquireVsCodeApi();
-                </script>
             </head>
             <body>
                 <div id="app"></div>

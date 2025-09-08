@@ -1,3 +1,4 @@
+import tsConfigPaths from "rollup-plugin-tsconfig-paths";
 import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
@@ -23,6 +24,7 @@ export default fs
         file: "dist/compiled/" + name + ".js",
       },
       plugins: [
+        tsConfigPaths(),
         svelte({
           compilerOptions: {
             // enable run-time checks when not in production

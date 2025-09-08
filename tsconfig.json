@@ -8,12 +8,16 @@
 			"DOM.Iterable"
 		],
 		"sourceMap": true,
-		"rootDir": "src",
+		"rootDir": ".",
 		"strict": true,
 		"moduleResolution": "Node16",
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true
 	},
+	"include": [
+		"src",
+		"common"
+	],
 	"exclude": [
 		"node_modules",
 		"dist",
