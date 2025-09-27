@@ -1,0 +1,6 @@
+- [ ] **Analyze existing bundler configs:** Examine `rollup.config.js` and `webpack.config.js` to understand the current build process.
+- [ ] **Identify Vite equivalents:** Research and find Vite plugins that replace the functionality of the current Rollup and Webpack plugins.
+- [ ] **Create `vite.config.js`:** Create a new Vite configuration file to build the Svelte-based webviews and the extension's source code.
+- [ ] **Update `package.json`:** Add `vite` and its necessary plugins to the `devDependencies` and update the build scripts to use Vite.
+- [ ] **Remove old configs:** Once the Vite build is working correctly, remove `rollup.config.js`, `webpack.config.js`, and any related dependencies from `package.json`.
+- [ ] **Test the build:** Run the new build process and ensure that the extension is bundled correctly and everything works as expected.
