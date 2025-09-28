@@ -6,7 +6,6 @@
 		{
 			"type": "npm",
 			"script": "watch",
-			"problemMatcher": "$ts-webpack-watch",
 			"isBackground": true,
 			"presentation": {
 				"reveal": "never",
@@ -15,7 +14,31 @@
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			}
+			},
+			"problemMatcher": [
+				{
+					"base": "$tsc-watch",
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": {
+							"regexp": "(Starting compilation in watch mode...|file change detected. Starting incremental compilation...)"
+						},
+						"endsPattern": {
+							"regexp": "(Found 0 errors. Watching for file changes.|Compilation complete. Watching for file changes.)"
+						}
+					}
+				},
+				{
+					"pattern": {
+						"regexp": "^\\s*$"
+					},
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "vite v.* building for development...",
+						"endsPattern": "built in .*ms"
+					}
+				}
+			]
 		},
 		{
 			"type": "npm",

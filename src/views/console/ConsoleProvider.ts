@@ -16,7 +16,9 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
 
         webviewView.webview.options = {
             enableScripts: true,
-            localResourceRoots: [this._extensionUri],
+            localResourceRoots: [
+                vscode.Uri.joinPath(this._extensionUri, "dist", "compiled"),
+            ],
         };
 
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
@@ -59,12 +61,12 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Visual Console</title>
-                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}';">
+                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src ${webview.cspSource} 'nonce-${nonce}';">
                 <link href="${styleMainUri}" rel="stylesheet">
             </head>
             <body>
                 <div id="app"></div>
-                <script src="${scriptUri}" nonce="${nonce}"></script>
+                <script type="module" src="${scriptUri}" nonce="${nonce}"></script>
             </body>
             </html>`;
     }

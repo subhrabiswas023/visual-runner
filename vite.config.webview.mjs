@@ -7,6 +7,7 @@ const webviewPages = fs.readdirSync(path.join(__dirname, 'webviews', 'pages'));
 
 export default defineConfig({
   build: {
+    target: 'es2023',
     rollupOptions: {
       input: webviewPages.reduce((acc, page) => {
         const name = page.split('.')[0];
@@ -18,8 +19,7 @@ export default defineConfig({
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
         assetFileNames: '[name].[ext]'
-      },
-      external: ['vscode']
+      }
     }
   },
   resolve: {

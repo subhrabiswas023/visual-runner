@@ -1,0 +1,11 @@
+
+import esbuild from 'esbuild';
+
+esbuild.build({
+  entryPoints: ['src/extension.ts'],
+  bundle: true,
+  outfile: 'dist/extension.js',
+  external: ['vscode'],
+  format: 'cjs',
+  platform: 'node',
+}).catch(() => process.exit(1));
