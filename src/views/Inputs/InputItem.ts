@@ -1,15 +1,14 @@
 import * as vscode from 'vscode';
 import { TreeItem } from '../TreeItem';
-import { getId } from '../../utils';
 import { TreeRefreshEvent } from '../types';
-import { LineItem } from './LineItem';
+import { EXTENSION_ID } from '../../constants';
 
 export class InputItem extends TreeItem {
     constructor(
         label: string,
         refreshCallback: (element?: TreeRefreshEvent) => void
     ) {
-        super(label, vscode.TreeItemCollapsibleState.Expanded, getId(), refreshCallback);
+        super(label, vscode.TreeItemCollapsibleState.Expanded, refreshCallback);
         this.contextValue = 'input';
     }
 
@@ -23,13 +22,9 @@ export class InputItem extends TreeItem {
         }
     }
 
-    async addLine() {
-        const lineLabel = await vscode.window.showInputBox({
-            prompt: 'Enter label for new line',
-        });
-        if (lineLabel) {
-            const lineItem = new LineItem(lineLabel, this.refreshCallback);
-            this.addChild(lineItem);
-        }
+    async edit() {
+        const uri = vscode.Uri.parse(`${EXTENSION_ID}.input-content:${this.label}`);
+        const doc = await vscode.workspace.openTextDocument(uri);
+        await vscode.window.showTextDocument(doc, { preview: false });
     }
 }

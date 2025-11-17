@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import { TreeItem } from '../TreeItem';
 import { TreeRefreshEvent } from '../types';
-import { getId } from '../../utils';
 import path from 'path';
 import { FileItem } from './FileItem';
 
@@ -9,7 +8,7 @@ export class InputsViewItem extends TreeItem {
     constructor (
         refreshCallback: (element?: TreeRefreshEvent) => void
     ) {
-        super('Inputs View', vscode.TreeItemCollapsibleState.Collapsed, getId(), refreshCallback);
+        super('Inputs View', vscode.TreeItemCollapsibleState.Collapsed, refreshCallback);
     }
 
     refresh(_element?: TreeRefreshEvent): void {

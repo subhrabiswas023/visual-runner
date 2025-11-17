@@ -18,42 +18,40 @@
 
 ### 💾 Persistent Input Storage
 
-- Saves the inputs used corresponding to the file and the workspace in the extension storage. However, it allows exporting to the workspace also.
-- Auto-loads stored inputs on the change of the connected file.
-- The connected file is synced to the active editor file but it can also be pinned to a particular file.
+- To keep the project directory clean, inputs are saved by default to the extension's internal storage, separate from the user's workspace files.
+- This prevents polluting the project with temporary data.
+- Users can optionally export inputs to their workspace if they need to be version-controlled or shared.
+- Auto-loads stored inputs when the connected file changes.
+- The connected file is synced to the active editor file by default, but can be pinned to a specific file.
 
 ### 🪟 Multiple Input Items
 
-- Allows adding multiple input items
-- Item name
-  - Starts follows 'Input {number}'
-    - The `number` is one more than the number of inputs
-    - Or it can be one more than the the number of this format with the largest number. (experimental)
-- Each item can be
+- Allows adding multiple distinct input items.
+- New items are automatically named 'Input {n}', where 'n' is the next available integer in the sequence.
+- Each item can be:
   - Renamed
   - Color-coded
-- Allows running the sessions using multiple of those inputs in the following modes
-  - sequential
-  - parallel (experimental)
+- Allows running sessions using these inputs in two modes:
+  - **Sequential**: Runs the program once for each selected input.
+  - **Parallel (experimental)**: Runs multiple instances of the program simultaneously with different inputs.
 
 ## 🟦 2. VISUAL CONSOLE (Panel Webview)
 
 ### 🧾 Clean Display
 
-- No command line clutter, pure console interface.
-- Syntax-highlighted with color coding:
-  - Theme error, warning(experimental) and success(experimental)
-  - Italic user input (typed or inserted from input view) (a distinct theme color)
-  - Color tokenization from VS Code theme or user settings
+- No command line clutter, just a pure console interface.
+- The program's output is syntax-highlighted for readability.
+- Colors used for status (e.g., success, warning, error) are derived from the user's active VS Code theme, allowing for a consistent and customizable look.
+- User input is styled distinctly (e.g., italics) to separate it from program output.
 
-### 💬 Interaction Text Field
+### 💬 Interaction Input Field
 
-- Text field at the bottom is bind to the cursor (distigusihed style from the user) location where the input is required.
-- The cursor is focused on the text field if the user has not moved away from focusing text field.
-- Disabled while
-  - Input is fetched
-  - Process is not listening to `stdin`
-- Placeholder mentions the state
+- A text field at the bottom of the console allows for interactive input.
+- Keystrokes in this field are mirrored in the main output view at the current input position, simulating typing directly into the console.
+- The input field is disabled while:
+  - Input is being fetched from the Inputs View.
+  - The running process is not listening for `stdin`.
+- The placeholder text indicates the current state:
   - "Type here to input"
   - "Fetching from inputs..."
   - "Executing..."
@@ -62,18 +60,18 @@
 
 ### 🔲 Buttons
 
-- ▶️ **Rune**
+- ▶️ **Run**
   - Executes the code.
   - Opens the console.
   - A play button
   - Changes to a pause button when activated
 - ⏸️ **Pause**:
   - Pauses the execution.
-  - Remembers the context where it was paused
+  - Saves the full execution state (e.g., variables and instruction pointers), similar to the functionality in a debugger, allowing the session to be resumed precisely where it left off.
   - Changes to a resume button when activated
 - 🔃 **Resume**
-  - Re-executes the code.
-  - Starts a new session in the console.
+  - Continues execution from a paused state.
+  - The console session is restored to where it was left off.
   - Changes to a pause button when activated
 - ⏹️ **Stop**
   - Gracefully kills the process.

@@ -1,22 +1,19 @@
 import * as vscode from "vscode";
 import { TreeRefreshEvent } from "../types";
 import { TreeItem } from '../TreeItem';
-import path from "path/win32";
-import { FileItem } from "./FileItem";
-import { getId } from "../../utils";
 import { InputsViewItem } from "./InputsViewItem";
 
 export class InputsProvider
     implements vscode.TreeDataProvider<TreeItem>
 {
-    private _onDidChangeTreeData = new vscode.EventEmitter<TreeRefreshEvent>();
-    readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
+    private _onDidChangeTreeDataEmitter = new vscode.EventEmitter<TreeRefreshEvent>();
+    readonly onDidChangeTreeData = this._onDidChangeTreeDataEmitter.event;
 
     refresh(element?: TreeRefreshEvent): void {
-        this._onDidChangeTreeData.fire(element);
+        this._onDidChangeTreeDataEmitter.fire(element);
     }
 
-    contextValue = 'inputs';
+    public static readonly contextValue = 'inputs';
     inputsViewItem = new InputsViewItem(this.refresh.bind(this));
 
     getTreeItem(
@@ -29,7 +26,5 @@ export class InputsProvider
         element?: TreeItem | undefined
     ): vscode.ProviderResult<TreeItem[]> {
         return element?.getChildren() ?? this.inputsViewItem.getChildren();
-    }
-
-    
+    }    
 }

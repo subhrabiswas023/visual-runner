@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { TreeRefreshEvent } from './types';
+import { getId } from '../utils';
 
 export class TreeItem extends vscode.TreeItem {
     private parent?: TreeItem | undefined;
@@ -9,19 +10,16 @@ export class TreeItem extends vscode.TreeItem {
     constructor(
         label: string | vscode.TreeItemLabel,
         collapsibleState: vscode.TreeItemCollapsibleState,
-        id: string,
         refreshCallback: (element?: TreeRefreshEvent) => void
     );
     constructor(
         resourceUri: vscode.Uri,
         collapsibleState: vscode.TreeItemCollapsibleState,
-        id: string,
         refreshCallback: (element?: TreeRefreshEvent) => void
     );
     constructor(
         labelOrResourceUri: string | vscode.TreeItemLabel | vscode.Uri,
         collapsibleState: vscode.TreeItemCollapsibleState,
-        id: string,
         refreshCallback: (element?: TreeRefreshEvent) => void
     ) {
         if (labelOrResourceUri instanceof vscode.Uri) {
@@ -29,7 +27,7 @@ export class TreeItem extends vscode.TreeItem {
         } else {
             super(labelOrResourceUri, collapsibleState);
         }
-        this.id = id;
+        this.id = getId();
         this.refreshCallback = refreshCallback;
     }
 

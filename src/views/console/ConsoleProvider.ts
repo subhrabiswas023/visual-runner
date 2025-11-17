@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 export class ConsoleProvider implements vscode.WebviewViewProvider {
-    public static readonly viewType = "visual-console";
+    public static readonly contextValue = "visual-console";
 
     private _view?: vscode.WebviewView;
 

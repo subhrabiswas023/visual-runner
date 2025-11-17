@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { getId } from '../../utils';
 import { TreeItem } from '../TreeItem';
 import { TreeRefreshEvent } from '../types';
 import { InputItem } from './InputItem';
@@ -9,7 +8,7 @@ export class FileItem extends TreeItem {
         resourceUri: vscode.Uri,
         public readonly refreshCallback: (element?: TreeRefreshEvent) => void
     ) {
-        super(resourceUri, vscode.TreeItemCollapsibleState.Expanded, getId(), refreshCallback);
+        super(resourceUri, vscode.TreeItemCollapsibleState.Expanded, refreshCallback);
         this.contextValue = 'file';
         this.iconPath = vscode.ThemeIcon.File;
     }

@@ -13,89 +13,78 @@
   "contributes": {
     "commands": [
       {
-        "command": "visual-runner-inputs.refresh",
+        "command": "visual-runner.inputs.refresh",
         "title": "Refresh Inputs",
         "category": "Visual Runner",
         "icon": "$(refresh)"
       },
       {
-        "command": "visual-runner-inputs.deleteItem",
+        "command": "visual-runner.inputs.deleteItem",
         "title": "Delete Item",
         "category": "Visual Runner",
         "icon": "$(trash)"
       },
       {
-        "command": "visual-runner-inputs.addFile",
+        "command": "visual-runner.inputs.addFile",
         "title": "Add File",
         "category": "Visual Runner",
         "icon": "$(add)"
       },
       {
-        "command": "visual-runner-inputs.addInput",
+        "command": "visual-runner.inputs.addInput",
         "title": "Add Input",
         "category": "Visual Runner",
         "icon": "$(add)"
       },
       {
-        "command": "visual-runner-inputs.renameInput",
+        "command": "visual-runner.inputs.renameInput",
         "title": "Rename Input",
         "category": "Visual Runner",
         "icon": "$(edit)"
-      },
-      {
-        "command": "visual-runner-inputs.addLine",
-        "title": "Add Line",
-        "category": "Visual Runner",
-        "icon": "$(add)"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "visual-runner-inputs.addFile",
-          "when": "view == visual-runner-inputs",
+          "command": "visual-runner.inputs.addFile",
+          "when": "view == visual-runner.inputs",
           "group": "navigation"
         },
         {
-          "command": "visual-runner-inputs.refresh",
-          "when": "view == visual-runner-inputs",
+          "command": "visual-runner.inputs.refresh",
+          "when": "view == visual-runner.inputs",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "visual-runner-inputs.addInput",
-          "when": "view == visual-runner-inputs && viewItem == file",
+          "command": "visual-runner.inputs.addInput",
+          "when": "view == inputs && viewItem == file",
           "group": "inline@1"
         },
         {
-          "command": "visual-runner-inputs.addInput",
-          "when": "view == visual-runner-inputs && viewItem == file",
+          "command": "visual-runner.inputs.addInput",
+          "when": "view == inputs && viewItem == file",
           "group": "modification@1"
         },
         {
-          "command": "visual-runner-inputs.renameInput",
-          "when": "view == visual-runner-inputs && viewItem == input",
+          "command": "visual-runner.inputs.renameInput",
+          "when": "view == inputs && viewItem == input",
           "group": "inline@1"
         },
         {
-          "command": "visual-runner-inputs.addLine",
-          "when": "view == visual-runner-inputs && viewItem == input",
-          "group": "inline@1"
-        },
-        {
-          "command": "visual-runner-inputs.deleteItem",
-          "when": "view == visual-runner-inputs && (viewItem == file || viewItem == input)",
+          "command": "visual-runner.inputs.deleteItem",
+          "when": "view == inputs && (viewItem == file || viewItem == input)",
           "group": "inline@2"
         },
         {
-          "command": "visual-runner-inputs.renameInput",
-          "when": "view == visual-runner-inputs && viewItem == input",
+          "command": "visual-runner.inputs.renameInput",
+          "when": "view == inputs && viewItem == input",
           "group": "modification@1"
         },
         {
-          "command": "visual-runner-inputs.deleteItem",
-          "when": "view == visual-runner-inputs && (viewItem == file || viewItem == input)",
+          "command": "visual-runner.inputs.deleteItem",
+          "when": "view == inputs && (viewItem == file || viewItem == input)",
           "group": "modification@2"
         }
       ]
@@ -119,7 +108,7 @@
     "views": {
       "visual-runner": [
         {
-          "id": "visual-runner-inputs",
+          "id": "inputs",
           "name": "Inputs",
           "type": "tree",
           "visibility": "collapsed",
@@ -139,36 +128,36 @@
     "configuration": {
       "title": "Visual Runner",
       "properties": {
-        "visualRunner.execution.maxBuffer": {
+        "visual-runner.execution.maxBuffer": {
           "type": "number",
           "default": 1048576,
           "description": "Maximum output buffer size in bytes"
         },
-        "visualRunner.execution.shell": {
+        "visual-runner.execution.shell": {
           "type": "string",
           "description": "Custom shell for execution (leave empty for default)"
         },
-        "visualRunner.cache.lifetime": {
+        "visual-runner.cache.lifetime": {
           "type": "number",
           "default": 3600000,
           "description": "Cache cleanup interval in milliseconds"
         },
-        "visualRunner.storage.location": {
+        "visual-runner.storage.location": {
           "type": "string",
           "default": ".vscode/.runner",
           "description": "Input storage location relative to workspace"
         },
-        "visualRunner.storage.maxSize": {
+        "visual-runner.storage.maxSize": {
           "type": "number",
           "default": 10485760,
           "description": "Maximum storage size in bytes"
         },
-        "visualRunner.storage.autoSave": {
+        "visual-runner.storage.autoSave": {
           "type": "number",
           "default": 1000,
           "description": "Auto-save frequency in milliseconds"
         },
-        "visualRunner.input.defaultMode": {
+        "visual-runner.input.defaultMode": {
           "type": "string",
           "enum": [
             "sequential",
@@ -177,7 +166,7 @@
           "default": "sequential",
           "description": "Default execution mode for multiple inputs"
         },
-        "visualRunner.input.autoFocus": {
+        "visual-runner.input.autoFocus": {
           "type": "boolean",
           "default": true,
           "description": "Auto-focus input field when waiting for input"
@@ -187,14 +176,15 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
+    "compile": "npm run clean  && npm run build:contribution && npm run compile:webview && npm run compile:extension",
     "clean": "rmdir /s /q dist",
-    "compile": "npm run clean && npm run compile:webview && npm run compile:extension",
-    "watch": "concurrently \"npm run watch:webview\" \"npm run watch:extension\"",
-    "package": "npm run compile",
+    "build:contribution": "ts-node -r tsconfig-paths/register scripts/build-contribution.ts",
     "compile:webview": "vite build --config vite.config.webview.mjs",
-    "watch:webview": "vite build --config vite.config.webview.mjs --watch",
     "compile:extension": "node esbuild.mjs",
+    "watch": "concurrently \"npm run watch:webview\" \"npm run watch:extension\"",
+    "watch:webview": "vite build --config vite.config.webview.mjs --watch",
     "watch:extension": "tsc -p tsconfig.json -w",
+    "package": "npm run compile",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
@@ -219,6 +209,8 @@
     "svelte": "^5.38.6",
     "svelte-check": "^4.3.1",
     "svelte-preprocess": "^6.0.3",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.2",
     "vite": "^5.4.0-beta.1",
     "vite-tsconfig-paths": "^5.1.4"
