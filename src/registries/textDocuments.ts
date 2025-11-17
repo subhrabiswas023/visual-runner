@@ -5,7 +5,7 @@ import { CoreRegistryFunctions } from "../../lib/vscode-contributes/src/coreRegi
 import { DeferredRegistry } from "../../lib/vscode-contributes/src/deferredRegistry";
 
 export class TextDocuments {
-    static readonly REGISTRY = new DeferredRegistry<vscode.TextDocumentContentProvider>(EXTENSION_ID, CoreRegistryFunctions.TEXT_DOCUMENT);
+    static readonly REGISTRY = new DeferredRegistry<vscode.TextDocumentContentProvider>(CoreRegistryFunctions.TEXT_DOCUMENT, EXTENSION_ID);
 
     static readonly INPUT_CONTENT = this.REGISTRY.register('input-content', () => new InputContentProvider());
 }

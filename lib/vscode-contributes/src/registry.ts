@@ -1,6 +1,6 @@
 import { Identifier } from "./identifier";
 import { RegistryRef } from "./registryRef";
-import { BaseRegistry } from "./baseRegistry.js";
+import { BaseRegistry } from "./baseRegistry";
 
 export class Registry<T> extends BaseRegistry<RegistryRef<T>> {
     constructor(

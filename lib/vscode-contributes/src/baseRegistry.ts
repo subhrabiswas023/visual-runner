@@ -1,4 +1,4 @@
-import { Identifier } from "./identifier.js";
+import { Identifier } from "./identifier";
 
 export class BaseRegistry<T> {
     private map = new Map<string, T>();

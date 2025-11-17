@@ -5,6 +5,7 @@
         "lib": ["ES2022", "DOM", "DOM.Iterable"],
         "sourceMap": true,
         "outDir": "./dist",
+        "baseUrl": ".",
         "rootDirs": ["src", "common"],
         "strict": true,
         "moduleResolution": "Node16",
