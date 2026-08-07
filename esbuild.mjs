@@ -1,5 +1,6 @@
 import esbuild from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
+import { tsconfigPathsPlugin } from 'esbuild-plugin-tsconfig-paths';
 
 esbuild.build({
   entryPoints: ['src/extension.ts'],
@@ -9,5 +10,8 @@ esbuild.build({
   format: 'cjs',
   platform: 'node',
   sourcemap: true,
-  plugins: [nodeExternalsPlugin()],
+  plugins: [
+    nodeExternalsPlugin(),
+    tsconfigPathsPlugin(),
+  ],
 }).catch(() => process.exit(1));
