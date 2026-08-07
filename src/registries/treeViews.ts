@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { InputsProvider } from "../views/Inputs/InputsProvider";
-import { CoreRegistryFunctions } from "../../lib/vscode-contributes/src/coreRegistryFunctions";
-import { DeferredRegistry } from "../../lib/vscode-contributes/src/deferredRegistry";
+import { CoreRegistryFunctions } from "@lib/vscode-contributes/src/coreRegistryFunctions";
+import { DeferredRegistry } from "@lib/vscode-contributes/src/deferredRegistry";
 import { TreeViewProviders } from "../datagen/treeViews";
 
 export class TreeViews {

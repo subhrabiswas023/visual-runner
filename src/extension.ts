@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { TreeViews } from './registries/treeViews';
 import { WebviewViews } from './registries/webviewViews';
-import { Commands } from './registries/commands';
 import { TextDocuments } from './registries/textDocuments';
+import { Commands } from './registries/commands';
 
 export function activate(context: vscode.ExtensionContext) {
     TreeViews.REGISTRY.activate(context);

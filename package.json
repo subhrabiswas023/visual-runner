@@ -9,7 +9,7 @@
   "categories": [
     "Other"
   ],
-  "main": "./dist/extension.js",
+  "main": "dist/src/extension.js",
   "contributes": {
     "commands": [
       {
@@ -167,6 +167,7 @@
     "@vscode/test-electron": "^2.4.1",
     "concurrently": "^9.2.1",
     "esbuild": "^0.25.10",
+    "esbuild-node-externals": "^1.20.1",
     "eslint": "^9.23.0",
     "svelte": "^5.38.6",
     "svelte-check": "^4.3.1",

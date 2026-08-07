@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
-import { EXTENSION_ID } from '../constants';
 import { ConsoleProvider } from '../views/console/ConsoleProvider';
-import { CoreRegistryFunctions } from '../../lib/vscode-contributes/src/coreRegistryFunctions';
-import { DeferredRegistry } from '../../lib/vscode-contributes/src/deferredRegistry';
+import { CoreRegistryFunctions } from '@lib/vscode-contributes/src/coreRegistryFunctions';
+import { DeferredRegistry } from '@lib/vscode-contributes/src/deferredRegistry';
 import { WebviewViewProviders } from '../datagen/webviewViews';
 
 export class WebviewViews {    

@@ -1,5 +1,5 @@
-import { DeferredRegistry } from '../../lib/vscode-contributes/src/deferredRegistry';
-import { CoreRegistryFunctions } from '../../lib/vscode-contributes/src/coreRegistryFunctions';
+import { DeferredRegistry } from '@lib/vscode-contributes/src/deferredRegistry';
+import { CoreRegistryFunctions } from '@lib/vscode-contributes/src/coreRegistryFunctions';
 import { CommandProviders } from '../datagen/commands';
 import { InputItem } from '../views/Inputs/InputItem';
 import { FileItem } from '../views/Inputs/FileItem';

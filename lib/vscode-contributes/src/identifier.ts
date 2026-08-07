@@ -4,6 +4,7 @@ export class Identifier {
     ) {}
 
     toString(): string {
-        return `${this.namespace}.${this.path}`;
+        const period = this.namespace ? "." : "";
+        return `${this.namespace}${period}${this.path}`;
     }
 }
