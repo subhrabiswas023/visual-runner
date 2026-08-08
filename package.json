@@ -7,92 +7,14 @@
     "vscode": "^1.99.0"
   },
   "categories": [
+    "Programming Languages",
     "Other"
   ],
+  "publisher": "subhrabiswas",
   "main": "dist/src/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "visual-runner.inputs.refresh",
-        "title": "Refresh Inputs",
-        "category": "Visual Runner",
-        "icon": "$(refresh)"
-      },
-      {
-        "command": "visual-runner.inputs.deleteItem",
-        "title": "Delete Item",
-        "category": "Visual Runner",
-        "icon": "$(trash)"
-      },
-      {
-        "command": "visual-runner.inputs.addFile",
-        "title": "Add File",
-        "category": "Visual Runner",
-        "icon": "$(add)"
-      },
-      {
-        "command": "visual-runner.inputs.addInput",
-        "title": "Add Input",
-        "category": "Visual Runner",
-        "icon": "$(add)"
-      },
-      {
-        "command": "visual-runner.inputs.renameInput",
-        "title": "Rename Input",
-        "category": "Visual Runner",
-        "icon": "$(edit)"
-      },
-      {
-        "command": "visual-runner.inputs.editInput",
-        "title": "Edit Input",
-        "category": "Visual Runner",
-        "icon": "$(edit)"
-      }
-    ],
-    "menus": {
-      "view/title": [
-        {
-          "command": "visual-runner.inputs.refresh",
-          "when": "view == visual-runner.inputs",
-          "group": "navigation"
-        },
-        {
-          "command": "visual-runner.inputs.addFile",
-          "when": "view == visual-runner.inputs",
-          "group": "navigation"
-        }
-      ],
-      "view/item/context": [
-        {
-          "command": "visual-runner.inputs.deleteItem",
-          "when": "view == visual-runner.inputs && (viewItem == file || viewItem == input)",
-          "group": "modification"
-        },
-        {
-          "command": "visual-runner.inputs.addInput",
-          "when": "view == visual-runner.inputs && viewItem == file",
-          "group": "inline"
-        },
-        {
-          "command": "visual-runner.inputs.renameInput",
-          "when": "view == visual-runner.inputs && viewItem == input",
-          "group": "modification"
-        },
-        {
-          "command": "visual-runner.inputs.editInput",
-          "when": "view == visual-runner.inputs && viewItem == input",
-          "group": "modification"
-        }
-      ]
-    },
+    "commands": [],
     "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "visual-runner",
-          "title": "Visual Runner",
-          "icon": "$(play)"
-        }
-      ],
       "panel": [
         {
           "id": "visual-console",
@@ -102,29 +24,6 @@
       ]
     },
     "views": {
-      "visual-runner": [
-        {
-          "id": "visual-runner.inputs",
-          "name": "Inputs",
-          "type": "tree",
-          "visibility": "visible",
-          "icon": "${list-tree}"
-        },
-        {
-          "id": "visual-runner.run-queue",
-          "name": "Run Queue",
-          "type": "tree",
-          "visibility": "visible",
-          "icon": "${play-circle}"
-        },
-        {
-          "id": "visual-runner.outputs",
-          "name": "Outputs",
-          "type": "tree",
-          "visibility": "visible",
-          "icon": "${list-tree}"
-        }
-      ],
       "visual-console": [
         {
           "id": "visual-runner.console",

@@ -2,7 +2,6 @@ import * as path from "path";
 import * as fs from "fs";
 
 import { CommandProviders } from "../src/datagen/commands";
-import { TreeViewProviders } from "../src/datagen/treeViews";
 import { WebviewViewProviders } from "../src/datagen/webviewViews";
 
 const contributes = {
@@ -12,50 +11,7 @@ const contributes = {
             ...ref.value,
         };
     }),
-    menus: {
-        "view/title": [
-            {
-                command: CommandProviders.REFRESH.id,
-                when: `view == ${TreeViewProviders.INPUTS.id}`,
-                group: "navigation",
-            },
-            {
-                command: CommandProviders.ADD_FILE.id,
-                when: `view == ${TreeViewProviders.INPUTS.id}`,
-                group: "navigation",
-            },
-        ],
-        "view/item/context": [
-            {
-                command: CommandProviders.DELETE_ITEM.id,
-                when: `view == ${TreeViewProviders.INPUTS.id} && (viewItem == file || viewItem == input)`,
-                group: "modification",
-            },
-            {
-                command: CommandProviders.ADD_INPUT.id,
-                when: `view == ${TreeViewProviders.INPUTS.id} && viewItem == file`,
-                group: "inline",
-            },
-            {
-                command: CommandProviders.RENAME_INPUT.id,
-                when: `view == ${TreeViewProviders.INPUTS.id} && viewItem == input`,
-                group: "modification",
-            },
-            {
-                command: CommandProviders.EDIT_INPUT.id,
-                when: `view == ${TreeViewProviders.INPUTS.id} && viewItem == input`,
-                group: "modification",
-            },
-        ],
-    },
     viewsContainers: {
-        activitybar: [
-            {
-                id: "visual-runner",
-                title: "Visual Runner",
-                icon: "$(play)",
-            },
-        ],
         panel: [
             {
                 id: "visual-console",
@@ -65,14 +21,6 @@ const contributes = {
         ],
     },
     views: {
-        "visual-runner": TreeViewProviders.REGISTRY.getAllValues().map(
-            (ref) => {
-                return {
-                    id: ref.id,
-                    ...ref.value,
-                };
-            }
-        ),
         "visual-console": WebviewViewProviders.REGISTRY.getAllValues().map(
             (ref) => {
                 return {
