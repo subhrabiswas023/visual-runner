@@ -10,6 +10,7 @@
         "moduleResolution": "Node16",
         "allowSyntheticDefaultImports": true,
         "isolatedModules": true,
+        "types": ["node"],
         "paths": {
             "@lib/*": ["./lib/*"]
         }
