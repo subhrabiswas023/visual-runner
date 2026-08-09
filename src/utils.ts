@@ -1,3 +1,9 @@
-export function getId() {
-    return `${Date.now()}-${Math.random().toString(36).slice(2, 15)}`;
+export function getNonce() {
+    let text = "";
+    const possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 32; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }

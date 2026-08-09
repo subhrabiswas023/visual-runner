@@ -10,7 +10,6 @@
     "compilerOptions": { 
       "strict": true, 
       "types": ["node", "svelte"],
-      "baseUrl": ".",
       "paths": {
         "@common/*": ["../common/*"],
         "@stores/*": ["./stores/*"]

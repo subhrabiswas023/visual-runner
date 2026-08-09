@@ -5,16 +5,18 @@
         "lib": ["ES2022", "DOM", "DOM.Iterable"],
         "sourceMap": true,
         "outDir": "./dist",
-        "rootDirs": ["src", "common"],
+        "rootDirs": ["src", "types"],
         "strict": true,
+        "noImplicitOverride": true,
         "moduleResolution": "Node16",
         "allowSyntheticDefaultImports": true,
         "isolatedModules": true,
         "types": ["node"],
         "paths": {
-            "@lib/*": ["./lib/*"]
+            "@lib/*": ["./lib/*"],
+            "@types/*": ["./types/*"],
         }
     },
-    "include": ["src", "common", "scripts", "lib", "archive"],
-    "exclude": ["node_modules", "dist", "webviews"]
+    "include": ["src", "types", "scripts", "lib"],
+    "exclude": []
 }

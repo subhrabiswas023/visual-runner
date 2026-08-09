@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 
+import { getNonce } from "../../utils";
+
 export class ConsoleProvider implements vscode.WebviewViewProvider {
     public static readonly contextValue = "visual-console";
 
@@ -36,12 +38,10 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
     }
 
     public appendToConsole(text: string) {
-        if (this._view) {
-            this._view.webview.postMessage({ 
-                command: 'appendOutput',
-                text 
-            });
-        }
+        this._view?.webview.postMessage({ 
+            command: 'appendOutput',
+            text
+        });
     }
 
     private _getHtmlForWebview(webview: vscode.Webview): string {
@@ -72,12 +72,4 @@ export class ConsoleProvider implements vscode.WebviewViewProvider {
     }
 }
 
-function getNonce() {
-    let text = "";
-    const possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 32; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}
+
